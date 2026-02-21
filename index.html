@@ -44,7 +44,7 @@
 </head>
 <body>
 
-    <audio id="love-song">
+    <audio id="love-song" loop>
         <source src="https://files.catbox.moe/3x0al8.mp3" type="audio/mpeg">
     </audio>
 
@@ -109,6 +109,22 @@
     </div>
 
     <script>
+        // دالة لعرض الكلمات بتوقيت مضبوط
+        function playLyrics() {
+            // إخفاء كل الكلمات أولاً (عشان الإعادة)
+            for(let i=1; i<=6; i++) {
+                document.getElementById('l' + i).classList.remove('active');
+            }
+
+            // توقيت الكلمات
+            setTimeout(() => document.getElementById('l1').classList.add('active'), 1000);
+            setTimeout(() => document.getElementById('l2').classList.add('active'), 4800);
+            setTimeout(() => document.getElementById('l3').classList.add('active'), 9000);
+            setTimeout(() => document.getElementById('l4').classList.add('active'), 13000);
+            setTimeout(() => document.getElementById('l5').classList.add('active'), 17500);
+            setTimeout(() => document.getElementById('l6').classList.add('active'), 21500);
+        }
+
         function checkPass() {
             const pass = document.getElementById('password').value;
             if(pass === "5-11-2007") {
@@ -120,13 +136,12 @@
                     document.body.addEventListener('click', () => song.play(), {once: true});
                 });
 
-                // توقيت الكلمات (مطابق لصوت تووليت)
-                setTimeout(() => document.getElementById('l1').classList.add('active'), 1000);
-                setTimeout(() => document.getElementById('l2').classList.add('active'), 4800);
-                setTimeout(() => document.getElementById('l3').classList.add('active'), 9000);
-                setTimeout(() => document.getElementById('l4').classList.add('active'), 13000);
-                setTimeout(() => document.getElementById('l5').classList.add('active'), 17500);
-                setTimeout(() => document.getElementById('l6').classList.add('active'), 21500);
+                playLyrics();
+
+                // إعادة الكلمات من الأول لما الأغنية تعيد نفسها
+                song.onplay = function() {
+                    playLyrics();
+                };
 
                 startTimer();
             } else {
